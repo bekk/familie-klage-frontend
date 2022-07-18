@@ -54,8 +54,8 @@ export interface Behandling {
     personId: string;
     steg: BehandlingSteg;
     status: BehandlingStatus;
-    endretTid: string;
-    opprettetTid: string;
+    sistEndret: string;
+    opprettet: string;
     resultat: BehandlingResultat;
     fagsystem: Fagsystem;
     vedtakDato?: string;

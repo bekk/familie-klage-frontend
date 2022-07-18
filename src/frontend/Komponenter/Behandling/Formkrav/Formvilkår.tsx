@@ -72,7 +72,7 @@ export const Formvilkår: React.FC<IFormvilkår> = ({
         klagefristOverholdt: VilkårStatus.IKKE_SATT,
         klageSignert: VilkårStatus.IKKE_SATT,
         saksbehandlerBegrunnelse: '',
-        sakSistEndret: dateString,
+        endretTid: dateString,
     };
 
     const [formData, settFormData] = useState<IForm>(formObjekt);
@@ -109,15 +109,12 @@ export const Formvilkår: React.FC<IFormvilkår> = ({
                     settFormData((prevState) => ({
                         ...prevState,
                         fagsakId: res.data.fagsakId,
-                        klageMottatt: res.data.klageMottatt,
-                        klageaarsak: res.data.klageaarsak,
-                        klageBeskrivelse: res.data.klageBeskrivelse,
                         klagePart: res.data.klagePart,
                         klageKonkret: res.data.klageKonkret,
                         klagefristOverholdt: res.data.klagefristOverholdt,
                         klageSignert: res.data.klageSignert,
                         saksbehandlerBegrunnelse: res.data.saksbehandlerBegrunnelse,
-                        vedtaksdato: res.data.vedtaksdato,
+                        endretTid: res.data.endretTid,
                     }));
                 }
             });
@@ -220,6 +217,7 @@ export const Formvilkår: React.FC<IFormvilkår> = ({
                     radioKnapper={radioKnapperLeseListe}
                     redigerHandling={settVilkårOppfylt}
                     saksbehandlerBegrunnelse={formData.saksbehandlerBegrunnelse}
+                    endretTid={formData.endretTid}
                 />
             )}
             {låst && (
@@ -227,6 +225,7 @@ export const Formvilkår: React.FC<IFormvilkår> = ({
                     radioKnapper={radioKnapperLeseListe}
                     redigerHandling={settLåst}
                     saksbehandlerBegrunnelse={formData.saksbehandlerBegrunnelse}
+                    endretTid={formData.endretTid}
                 />
             )}
         </VilkårStyling>

@@ -39,7 +39,7 @@ export const Formkrav: React.FC<{ behandlingId: string }> = ({ behandlingId }) =
         klagefristOverholdt: VilkårStatus.IKKE_SATT,
         klageSignert: VilkårStatus.IKKE_SATT,
         saksbehandlerBegrunnelse: '',
-        sakSistEndret: '',
+        endretTid: '',
     };
 
     const [formkrav, settFormkrav] = useState<IForm>(formObjekt);

@@ -159,9 +159,11 @@ const FritekstBrev: React.FC<Props> = ({
     }, [axiosRequest, behandlingId]);
 
     useEffect(() => {
-        if (mellomlagretFritekstbrev) endreAvsnitt(mellomlagretFritekstbrev.avsnitt);
-    }),
-        [mellomlagretFritekstbrev];
+        if (mellomlagretFritekstbrev) {
+            endreOverskrift(mellomlagretFritekstbrev.overskrift);
+            endreAvsnitt(mellomlagretFritekstbrev.avsnitt);
+        }
+    }, [mellomlagretFritekstbrev]);
 
     const utsattGenererBrev = useDebouncedCallback(genererBrev, 1000);
     useEffect(utsattGenererBrev, [utsattGenererBrev, avsnitt, overskrift]);

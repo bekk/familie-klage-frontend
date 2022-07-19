@@ -40,7 +40,7 @@ export const FormkravOppsummering: React.FC<IFormkravOppsummering> = ({
                 <Heading spacing size="medium" level="5">
                     Formkrav
                 </Heading>
-                {oppfylt < muligOppfylt ? (
+                {oppfylt < muligOppfylt || muligOppfylt == 0 ? (
                     <>
                         <BodyLong size="small">
                             {oppfylt} av {muligOppfylt} oppfylt

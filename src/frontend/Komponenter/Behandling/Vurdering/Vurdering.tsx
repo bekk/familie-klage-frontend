@@ -39,8 +39,8 @@ const VurderingKnappStyled = styled(Button)`
 
 export const Vurdering: React.FC<{ behandlingId: string }> = ({ behandlingId }) => {
     // Formkravoppsummering
-    const [oppfylt, settOppfylt] = useState(1);
-    const [muligOppfylt, settMuligOppfylt] = useState(1);
+    const [oppfylt, settOppfylt] = useState(0);
+    const [muligOppfylt, settMuligOppfylt] = useState(0);
     const [begrunnelse, settBegrunnelse] = useState('');
     const [feilmelding, settFeilmelding] = useState('Dette er en feilmelding'); // TODO legge til enum-objekter som sier om det er begrunnelse eller vurdering som mangler
 
@@ -51,7 +51,6 @@ export const Vurdering: React.FC<{ behandlingId: string }> = ({ behandlingId }) 
         hjemmel: HjemmelValg.VELG,
         beskrivelse: '',
     };
-    const [vilkårListe, settVilkårListe] = useState<VilkårStatus[]>([]);
 
     const [vurderingData, settVurderingData] = useState<IVurdering>(vurderingObject);
 
@@ -79,9 +78,7 @@ export const Vurdering: React.FC<{ behandlingId: string }> = ({ behandlingId }) 
                 });
             }
         });
-        settOppfylt(vilkårListe.filter((item: VilkårStatus) => item === 'OPPFYLT').length);
-        settMuligOppfylt(vilkårListe.length);
-    }, [axiosRequest, vilkårListe, behandlingId]);
+    }, [axiosRequest, behandlingId]);
 
     // Hent data fra formkrav
     useEffect(() => {
@@ -90,13 +87,18 @@ export const Vurdering: React.FC<{ behandlingId: string }> = ({ behandlingId }) 
             url: `/familie-klage/api/formkrav/vilkar/${behandlingId}`,
         }).then((res: Ressurs<IForm>) => {
             if (res.status === RessursStatus.SUKSESS) {
-                settVilkårListe([
+                const vilkårListe = [
                     res.data.klagePart,
                     res.data.klageKonkret,
                     res.data.klagefristOverholdt,
                     res.data.klageSignert,
-                ]);
+                ];
+                settOppfylt(vilkårListe.filter((item: VilkårStatus) => item === 'OPPFYLT').length);
+                settMuligOppfylt(vilkårListe.length);
                 settBegrunnelse(res.data.saksbehandlerBegrunnelse);
+            } else {
+                settOppfylt(0);
+                settMuligOppfylt(0);
             }
         });
     }, [axiosRequest, behandlingId]);

@@ -115,25 +115,32 @@ export const Vurdering: React.FC<{ behandlingId: string }> = ({ behandlingId }) 
 
     const [senderInn, settSenderInn] = useState<boolean>(false);
 
+    const vent = () => {
+        return new Promise((resolve) => setTimeout(resolve, 3000));
+    };
+
     const opprettVurdering = () => {
         if (senderInn) {
             return;
         }
 
         settSenderInn(true);
-        axiosRequest<IVurdering, IVurdering>({
-            method: 'POST',
-            url: `/familie-klage/api/vurdering`,
-            data: vurderingData,
-        }).then((res: Ressurs<IVurdering>) => {
-            if (res.status === RessursStatus.SUKSESS) {
-                nullstillIkkePersisterteKomponenter();
-                settVurderingSideGyldig(true);
-                settBrevSteg(true);
-            }
-            settSenderInn(false);
-            settVurderingEndret(false);
-        });
+        vent().then(() =>
+            // for å demonstrere at man må vente til post-kall er ferdig
+            axiosRequest<IVurdering, IVurdering>({
+                method: 'POST',
+                url: `/familie-klage/api/vurdering`,
+                data: vurderingData,
+            }).then((res: Ressurs<IVurdering>) => {
+                if (res.status === RessursStatus.SUKSESS) {
+                    nullstillIkkePersisterteKomponenter();
+                    settVurderingSideGyldig(true);
+                    settBrevSteg(true);
+                }
+                settSenderInn(false);
+                settVurderingEndret(false);
+            })
+        );
     };
 
     return (

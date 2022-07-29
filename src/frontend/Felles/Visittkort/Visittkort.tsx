@@ -41,12 +41,12 @@ const VisittkortComponent: FC<{
     personopplysninger: IPersonopplysninger;
     behandling: Behandling;
 }> = ({ personopplysninger, behandling }) => {
-    const { personId, kjønn, navn } = personopplysninger;
+    const { personIdent, kjønn, navn } = personopplysninger;
     return (
         <VisittkortWrapper>
             <Visittkort
                 alder={20}
-                ident={personId}
+                ident={personIdent}
                 kjønn={kjønn}
                 navn={<Visningsnavn>{navn}</Visningsnavn>}
             ></Visittkort>

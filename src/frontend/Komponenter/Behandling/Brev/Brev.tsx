@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { byggTomRessurs, Ressurs } from '../../../App/typer/ressurs';
 import FritekstBrev from './FritekstBrev';
 import PdfVisning from './PdfVisning';
@@ -60,6 +60,17 @@ export const Brev: React.FC<IBrev> = ({ behandlingId }) => {
     };
 
     const [senderInn, settSenderInn] = useState<boolean>(false);
+
+    const [didMount, setDidMount] = useState(false);
+
+    useEffect(() => {
+        setDidMount(true);
+        return () => setDidMount(false);
+    }, []);
+
+    if (!didMount) {
+        return null;
+    }
 
     const ferdigstillBrev = () => {
         if (senderInn) {
